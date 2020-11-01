@@ -197,3 +197,80 @@ Note the two source files contains the specifications of the source token that w
 If you change the value of the `subject_token`, the STS server will reject the request.
 
 if you want to, edit the  files and replace the values for `resource` and `audience` with `$GRPC_SERVER_ADDRESS` (its a no-op since this isn't used in this STS server )
+
+---
+
+## STSTokenSource Server demo using HTTP Client
+
+The following bootstraps STS Credentials *from* and *to* an [oauth2.TokenSource](https://godoc.org/golang.org/x/oauth2#TokenSource).
+
+This basically means you can inject any token into a TokenSource and then utilize an unsupported library here:
+ [https://github.com/salrashid123/oauth2#usage-sts](https://github.com/salrashid123/oauth2#usage-sts)
+
+to derive a new tokensource based off an STS server.
+
+I'm using an oauth2 token source here but clearly, the source and target tokensources need not be oauth2.
+
+>> this is not supported by google and neither is `github.com/salrashid123/oauth2/sts`
+
+You must first deploy the STS Server into cloud run as shown in the root repo.
+
+### Start HTTP Server
+
+```bash
+cd http_server
+go run server.go
+```
+
+### Start Client
+
+```bash
+$ go run client.go --stsaddress https://stsserver-6w42z6vi3q-uc.a.run.app/token
+```
+
+The following snippet shows the exchange happening from a source token "iamtheeggman" to a destination tokensource that will automatically perform the STS Exchange.
+
+
+One the exchange takes place, a plain authorized request 
+```golang
+import (
+   	sal "github.com/salrashid123/oauth2/sts"
+)
+
+	client := &http.Client{}
+
+    // start with a source tken
+	rootTS := oauth2.StaticTokenSource(&oauth2.Token{
+		AccessToken: "iamtheeggman",
+		TokenType:   "Bearer",
+		Expiry:      time.Now().Add(time.Duration(time.Second * 60)),
+    })
+    
+    // exchange it
+	stsTokenSource, _ := sal.STSTokenSource(
+		&sal.STSTokenConfig{
+			TokenExchangeServiceURI: "https://stsserver-6w42z6vi3q-uc.a.run.app/token",
+			Resource:                "localhost",
+			Audience:                "localhost",
+			Scope:                   "https://www.googleapis.com/auth/cloud-platform",
+			SubjectTokenSource:      rootTS,
+			SubjectTokenType:        "urn:ietf:params:oauth:token-type:access_token",
+			RequestedTokenType:      "urn:ietf:params:oauth:token-type:access_token",
+		},
+    )
+    
+    // print the new token (iamthewalrus)
+	tok, err := stsTokenSource.Token()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("New Token: %s", tok.AccessToken)    
+
+    // use the new token
+	client = oauth2.NewClient(context.TODO(), stsTokenSource)
+	resp, err := client.Get("http://localhost:8080/")
+	if err != nil {
+		log.Printf("Error creating client %v", err)
+		return
+    }
+```
