@@ -26,6 +26,11 @@ This tutorial will deploy
 * `STS server` on Cloud Run that will only provide the token exchange if the inbound token is `iamtheeggman`
 * `gRPC client` that will use the STS Credential object to access the gRPC server after it performs the exchange.
 
+then if you want
+
+* `http_server` locally which will inspect the `Authoriztion` header and only allow the request if the value is `iamthewalrus`
+* `http_client` locally that will use a _custom_ [STSTokenSource](https://github.com/salrashid123/oauth2#usage-sts) to get the new token
+
 
 first gRPC
 
