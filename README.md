@@ -149,6 +149,7 @@ The usage for this in the client would look like
 		})
 ```
 
+Alternatively, just to test,you can inject a [test TokenSource](https://github.com/salrashid123/oauth2#usage-mytokensource) instead of the static on.
 
 ### curl
 
