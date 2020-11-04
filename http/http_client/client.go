@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	testts "github.com/salrashid123/oauth2/mytokensource"
+	testts "github.com/salrashid123/oauth2/dummy"
 	sal "github.com/salrashid123/oauth2/sts"
 	"golang.org/x/oauth2"
 )
@@ -28,7 +28,7 @@ func main() {
 
 	client := &http.Client{}
 
-	myts, err := testts.NewMyTokenSource(&testts.MyTokenConfig{
+	myts, err := testts.NewDummyTokenSource(&testts.DummyTokenConfig{
 		TokenValues:             []string{"iamtheeggman", "iamtheeggman", "someotherpassword"},
 		RotationIntervalSeconds: 10,
 	})
