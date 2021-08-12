@@ -10,7 +10,7 @@ RUN go get -u github.com/golang/protobuf/protoc-gen-go
 WORKDIR /app
 ADD . /app
 RUN go mod download
-RUN /usr/local/bin/protoc -I . --include_imports --include_source_info --descriptor_set_out=echo/echo.proto.pb  --go_out=plugins=grpc:. echo/echo.proto
+RUN /usr/local/bin/protoc -I . --include_imports --include_source_info --go_opt=paths=source_relative  --descriptor_set_out=echo/echo.proto.pb  --go_out=plugins=grpc:. echo/echo.proto
 RUN export GOBIN=/app/bin && go install grpc_server.go
 
 

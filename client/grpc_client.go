@@ -3,10 +3,11 @@ package main
 import (
 	"crypto/tls"
 	"crypto/x509"
-	pb "echo"
 	"flag"
 	"io/ioutil"
 	"log"
+
+	pb "github.com/salrashid123/sts_server/echo"
 
 	"golang.org/x/net/context"
 

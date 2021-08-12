@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"echo"
+	"github.com/salrashid123/sts_server/echo"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"

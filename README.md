@@ -73,7 +73,7 @@ cd sts_server/
 docker build -t gcr.io/$PROJECT_ID/sts_server .
 docker push gcr.io/$PROJECT_ID/sts_server
 
-gcloud beta run deploy stsserver  --image gcr.io/$PROJECT_ID/sts_server \
+gcloud run deploy stsserver  --image gcr.io/$PROJECT_ID/sts_server \
  --region us-central1  --allow-unauthenticated --platform=managed  -q
 ```
 
@@ -100,12 +100,7 @@ go run grpc_client.go \
   --usetls \
   --stsCredFile /tmp/stscreds/creds.txt
 
-## or via client docker image
-docker build -t gcr.io/$PROJECT_ID/grpc_client .
-docker run -v /tmp/stscreds:/stscreds gcr.io/$PROJECT_ID/grpc_client \
- --address $GRPC_SERVER_ADDRESS:443 \
- --cacert googleCA.crt --servername $GRPC_SERVER_ADDRESS \
- --usetls --stsCredFile /stscreds/creds.txt
+## note, you can get googleCA.crt by copying in `openssl s_client $GRPC_SERVER_ADDRESS:443`
 ```
 
 ok, how does this work with gRPC?  Well you just have to specify the STS Credential type as credential object with the specifications of the STS configurations.
@@ -232,6 +227,14 @@ go run server.go
 
 ```bash
 $ go run client.go --stsaddress https://stsserver-6w42z6vi3q-uc.a.run.app/token
+
+$ go run client.go --stsaddress https://stsserver-6w42z6vi3q-uc.a.run.app/token
+		myToken not valid refreshing 
+		myToken, returning new [iamtheeggman]
+		2021/08/11 21:35:36 New Token: iamthewalrus
+		myToken not valid refreshing 
+		myToken, returning new [iamtheeggman]
+		2021/08/11 21:35:36 ok
 ```
 
 The following snippet shows the exchange happening from a source token "iamtheeggman" to a destination tokensource that will automatically perform the STS Exchange.

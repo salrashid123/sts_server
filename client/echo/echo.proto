@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package echo;
+option go_package = "github.com/salrashid123/sts_server/echo";
 
 service EchoServer {
   rpc SayHello (EchoRequest) returns (EchoReply) {}
