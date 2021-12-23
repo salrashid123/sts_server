@@ -1,4 +1,4 @@
-## Serverless Secure Token Exchange Server(STS) and gRPC STS credentials
+## Serverless Security Token Exchange Server(STS) and gRPC STS credentials
 
 
 This repo contains a very basic STS server deployed on [Cloud Run](https://cloud.google.com/run/docs) which exchanges a one `access_token` for another....basically, a token broker described here:
