@@ -111,7 +111,8 @@ Once you specify all this, the grpc Client will do the legwork to exchange the s
 
 ```golang
 import (
-  	"google.golang.org/grpc/credentials/sts"
+	//"google.golang.org/grpc/credentials/sts"
+	"github.com/salrashid123/sts_server/sts"
 )
 
 		stscreds, err := sts.NewCredentials(sts.Options{
@@ -122,6 +123,7 @@ import (
 			SubjectTokenPath:        *stsCredFile,
 			SubjectTokenType:        "urn:ietf:params:oauth:token-type:access_token",
 			RequestedTokenType:      "urn:ietf:params:oauth:token-type:access_token",
+			HTTPClient:              http.DefaultClient,
 		})
 
 		conn, err = grpc.Dial(*address,
@@ -146,6 +148,7 @@ The usage for this in the client would look like
 			}),			
 			SubjectTokenType:        "urn:ietf:params:oauth:token-type:access_token",
 			RequestedTokenType:      "urn:ietf:params:oauth:token-type:access_token",
+			//HttpClient:     http.DefaultClient,
 		})
 ```
 
@@ -265,6 +268,7 @@ import (
 			SubjectTokenSource:      rootTS,
 			SubjectTokenType:        "urn:ietf:params:oauth:token-type:access_token",
 			RequestedTokenType:      "urn:ietf:params:oauth:token-type:access_token",
+			//HttpClient:     http.DefaultClient,
 		},
     )
     

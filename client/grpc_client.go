@@ -2,10 +2,9 @@ package main
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"flag"
-	"io/ioutil"
 	"log"
+	"net/http"
 
 	pb "github.com/salrashid123/sts_server/echo"
 
@@ -14,8 +13,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
-	"google.golang.org/grpc/credentials/sts"
-	//"sts"
+	//"google.golang.org/grpc/credentials/sts"
+	"github.com/salrashid123/sts_server/sts"
 )
 
 var (
@@ -60,18 +59,32 @@ func main() {
 			log.Fatalf("did not connect: %v", err)
 		}
 	} else {
-		rootCAs := x509.NewCertPool()
-		var tlsCfg tls.Config
-		pem, err := ioutil.ReadFile(*cacert)
-		if err != nil {
-			log.Fatalf("failed to load root CA certificates  error=%v", err)
-		}
-		if !rootCAs.AppendCertsFromPEM(pem) {
-			log.Fatalf("no root CA certs parsed from file ")
-		}
-		tlsCfg.RootCAs = rootCAs
-		tlsCfg.ServerName = *sniServerName
-		ce := credentials.NewTLS(&tlsCfg)
+		// rootCAs := x509.NewCertPool()
+		// var tlsCfg tls.Config
+		// pem, err := ioutil.ReadFile(*cacert)
+		// if err != nil {
+		// 	log.Fatalf("failed to load root CA certificates  error=%v", err)
+		// }
+		// if !rootCAs.AppendCertsFromPEM(pem) {
+		// 	log.Fatalf("no root CA certs parsed from file ")
+		// }
+		// tlsCfg.RootCAs = rootCAs
+		// tlsCfg.ServerName = *sniServerName
+		// ce := credentials.NewTLS(&tlsCfg)
+
+		// serverCA, err := ioutil.ReadFile(*cacert)
+		// if err != nil {
+		// 	log.Fatalf("did not read tlsCA: %v", err)
+		// }
+		// caCertPool := x509.NewCertPool()
+		// caCertPool.AppendCertsFromPEM(serverCA)
+		// customClient := &http.Client{
+		// 	Transport: &http.Transport{
+		// 		TLSClientConfig: &tls.Config{
+		// 			ServerName: "stsserver-6w42z6vi3q-uc.a.run.app",
+		// 			RootCAs:    caCertPool,
+		// 		},
+		// 	}}
 
 		// ### without auth
 		// conn, err = grpc.Dial(*address,
@@ -90,6 +103,8 @@ func main() {
 		// 	log.Fatalf("did not connect: %v", err)
 		// }
 
+		ce := credentials.NewTLS(&tls.Config{})
+
 		// ### test with sts
 		stscreds, err := sts.NewCredentials(sts.Options{
 			TokenExchangeServiceURI: *stsaddress,
@@ -99,6 +114,8 @@ func main() {
 			SubjectTokenPath:        *stsCredFile,
 			SubjectTokenType:        "urn:ietf:params:oauth:token-type:access_token",
 			RequestedTokenType:      "urn:ietf:params:oauth:token-type:access_token",
+			HTTPClient:              http.DefaultClient,
+			//HTTPClient: customClient,
 		})
 		if err != nil {
 			log.Fatalf("unable to create TokenSource: %v", err)
