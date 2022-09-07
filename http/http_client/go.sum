@@ -182,8 +182,6 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
-github.com/salrashid123/oauth2/dummy v0.0.0-20201104222447-70ae3b97652e h1:gJMrTk3jjNvBfPJS1O1QIi9+PaDxI73FnUXPIIFVr/E=
-github.com/salrashid123/oauth2/dummy v0.0.0-20201104222447-70ae3b97652e/go.mod h1:MAqTAFH87sxvNYoW52C4yKXLWclC2fkH6wHnP3vd11E=
 github.com/salrashid123/oauth2/sts v0.0.0-20220907195215-3455a4df5567 h1:+s5Hm5SWjqQWyFHHPfNKCfwEZ2DIvZC//fSxIYAQRuY=
 github.com/salrashid123/oauth2/sts v0.0.0-20220907195215-3455a4df5567/go.mod h1:dSVEOY4qYdl5DzxGiZspFAafpht50EZmbkceY6alg2k=
 github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72/go.mod h1:JwIasOWyU6f++ZhiEuf87xNszmSA2myDM2Kzu9HwQUA=
