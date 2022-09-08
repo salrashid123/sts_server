@@ -14,7 +14,6 @@ This particular STS server exchanges one static access token for another.   It w
 
 You can use an http client `curl` to see the exchange directly and then use a new gRPC client which utilizes its own gRPC STS Credential object:
 
-- ["google.golang.org/grpc/credentials/sts"](https://godoc.org/google.golang.org/grpc/credentials/sts)
 
 >> This is not an officially supported Google product
 
@@ -108,6 +107,8 @@ ok, how does this work with gRPC?  Well you just have to specify the STS Credent
 In the command set below, we're specifying the rest endpoint of the STS server, and critically the `SubjectTokenPath` which is the path to the file where we saved the source token.
 
 Once you specify all this, the grpc Client will do the legwork to exchange the source token for the remote one
+
+> Note: i'm using my own sts credential provider `"github.com/salrashid123/sts_server/sts"` which is a fork of `"google.golang.org/grpc/credentials/sts"` until [issue  5611](https://github.com/grpc/grpc-go/pull/5611) is merged 
 
 ```golang
 import (
