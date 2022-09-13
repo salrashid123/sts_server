@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	sal "github.com/salrashid123/oauth2/sts"
+	sal "github.com/salrashid123/sts/http"
 	"golang.org/x/oauth2"
 )
 

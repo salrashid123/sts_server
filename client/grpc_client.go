@@ -14,7 +14,7 @@ import (
 	"google.golang.org/grpc/credentials"
 
 	//"google.golang.org/grpc/credentials/sts"
-	"github.com/salrashid123/sts_server/sts"
+	"github.com/salrashid123/sts/grpc"
 )
 
 var (
