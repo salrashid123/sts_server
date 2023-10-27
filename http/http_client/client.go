@@ -13,9 +13,10 @@ import (
 )
 
 var (
-	stsaddress  = flag.String("stsaddress", "https://stsserver-6w42z6vi3q-uc.a.run.app/token", "STS Server address")
-	stsaudience = flag.String("stsaudience", "stsserver-6w42z6vi3q-uc.a.run.app", "the audience and resource value to send to STS server")
+	stsaddress  = flag.String("stsaddress", "https://stsserver-3kdezruzua-uc.a.run.app/token", "STS Server address")
+	stsaudience = flag.String("stsaudience", "stsserver-3kdezruzua-uc.a.run.app", "the audience and resource value to send to STS server")
 	scope       = flag.String("scope", "https://www.googleapis.com/auth/cloud-platform", "scope to send to STS server")
+	endpoint    = flag.String("endpoint", "http://localhost:8080/", "the server to send the exchanged bearer token to (either http://localhost:8080/ or https://httpbin.org/get")
 )
 
 const (
@@ -51,7 +52,7 @@ func main() {
 	log.Printf("New Token: %s", tok.AccessToken)
 
 	client := oauth2.NewClient(context.TODO(), stsTokenSource)
-	resp, err := client.Get("http://localhost:8080/")
+	resp, err := client.Get(*endpoint)
 	if err != nil {
 		log.Printf("Error creating client %v", err)
 		return

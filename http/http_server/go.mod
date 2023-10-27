@@ -1,10 +1,10 @@
 module main
 
-go 1.15
+go 1.21.0
 
 require (
-	github.com/google/tink/go v1.4.0 // indirect
-	github.com/gorilla/context v1.1.1 // indirect
-	github.com/gorilla/mux v1.8.0 // indirect
-	golang.org/x/net v0.0.0-20201006153459-a7d1128ccaa0 // indirect
+	github.com/gorilla/mux v1.8.0
+	golang.org/x/net v0.17.0
 )
+
+require golang.org/x/text v0.13.0 // indirect

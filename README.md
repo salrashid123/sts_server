@@ -28,7 +28,7 @@ This tutorial will deploy
 then if you want
 
 * `http_server` locally which will inspect the `Authoriztion` header and only allow the request if the value is `iamthewalrus`
-* `http_client` locally that will use a _custom_ [STSTokenSource](https://github.com/salrashid123/oauth2#usage-sts) to get the new token
+* `http_client` uses a the sts client library from `https://github.com/salrashid123/sts/tree/main/http` to perform the exchange and send the final token to an endpoint
 
 
 first gRPC
@@ -226,15 +226,26 @@ go run server.go
 ### Start Client
 
 ```bash
-$ go run client.go --stsaddress https://https://stsserver-3kdezruzua-uc.a.run.app/token
+$ go run client.go --stsaddress https://stsserver-3kdezruzua-uc.a.run.app/token --endpoint https://httpbin.org/get
 
-$ go run client.go --stsaddress https://https://stsserver-3kdezruzua-uc.a.run.app/token
-		myToken not valid refreshing 
-		myToken, returning new [iamtheeggman]
-		2021/08/11 21:35:36 New Token: iamthewalrus
-		myToken not valid refreshing 
-		myToken, returning new [iamtheeggman]
-		2021/08/11 21:35:36 ok
+2023/10/27 13:20:14 New Token: iamthewalrus
+2023/10/27 13:20:14 {
+  "args": {}, 
+  "headers": {
+    "Accept-Encoding": "gzip", 
+    "Authorization": "Bearer iamthewalrus", 
+    "Host": "httpbin.org", 
+    "User-Agent": "Go-http-client/2.0", 
+    "X-Amzn-Trace-Id": "Root=1-653bf14e-6f28f7843667ed806be1e4bc"
+  }, 
+  "origin": "108.51.25.168", 
+  "url": "https://httpbin.org/get"
+}
+
+$ go run client.go --stsaddress https://stsserver-3kdezruzua-uc.a.run.app/token --endpoint http://localhost:8080/
+2023/10/27 13:20:27 New Token: iamthewalrus
+2023/10/27 13:20:27 ok
+
 ```
 
 The following snippet shows the exchange happening from a source token "iamtheeggman" to a destination tokensource that will automatically perform the STS Exchange.
