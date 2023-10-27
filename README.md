@@ -56,7 +56,7 @@ cd server/
 docker build -t gcr.io/$PROJECT_ID/grpc_server .
 docker push gcr.io/$PROJECT_ID/grpc_server
 
-gcloud beta run deploy grpcserver  \
+gcloud  run deploy grpcserver  \
   --image gcr.io/$PROJECT_ID/grpc_server \
   --allow-unauthenticated  --region us-central1  --platform=managed  -q
 ```
@@ -65,10 +65,6 @@ gcloud beta run deploy grpcserver  \
 
 ```bash
 cd sts_server/
-# use cloud build
-# gcloud builds submit --machine-type=n1-highcpu-8 --tag gcr.io/$PROJECT_ID/sts_server . 
-
-# or directly
 docker build -t gcr.io/$PROJECT_ID/sts_server .
 docker push gcr.io/$PROJECT_ID/sts_server
 
@@ -191,8 +187,8 @@ Note the two source files contains the specifications of the source token that w
 ```json
 {
     "grant_type": "urn:ietf:params:oauth:grant-type:token-exchange",
-    "resource": "grpcserver-6w42z6vi3q-uc.a.run.app",
-    "audience": "grpcserver-6w42z6vi3q-uc.a.run.app",
+    "resource": "grpcserver-3kdezruzua-uc.a.run.app",
+    "audience": "grpcserver-3kdezruzua-uc.a.run.app",
     "requested_token_type": "urn:ietf:params:oauth:token-type:access_token",
     "subject_token": "iamtheeggman",
     "subject_token_type": "urn:ietf:params:oauth:token-type:access_token"
@@ -230,9 +226,9 @@ go run server.go
 ### Start Client
 
 ```bash
-$ go run client.go --stsaddress https://stsserver-6w42z6vi3q-uc.a.run.app/token
+$ go run client.go --stsaddress https://https://stsserver-3kdezruzua-uc.a.run.app/token
 
-$ go run client.go --stsaddress https://stsserver-6w42z6vi3q-uc.a.run.app/token
+$ go run client.go --stsaddress https://https://stsserver-3kdezruzua-uc.a.run.app/token
 		myToken not valid refreshing 
 		myToken, returning new [iamtheeggman]
 		2021/08/11 21:35:36 New Token: iamthewalrus
@@ -262,7 +258,7 @@ import (
     // exchange it
 	stsTokenSource, _ := sal.STSTokenSource(
 		&sal.STSTokenConfig{
-			TokenExchangeServiceURI: "https://stsserver-6w42z6vi3q-uc.a.run.app/token",
+			TokenExchangeServiceURI: "https://https://stsserver-3kdezruzua-uc.a.run.app/token",
 			Resource:                "localhost",
 			Audience:                "localhost",
 			Scope:                   "https://www.googleapis.com/auth/cloud-platform",

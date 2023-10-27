@@ -1,6 +1,6 @@
-FROM golang:1.14 as build
+# go1.19.8 linux/amd64
+FROM docker.io/golang@sha256:9f2dd04486e84eec72d945b077d568976981d9afed8b4e2aeb08f7ab739292b3 as build
 
-ENV GO111MODULE=on
 WORKDIR /app
 COPY . .
 RUN go mod download
