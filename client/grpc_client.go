@@ -14,16 +14,16 @@ import (
 	"google.golang.org/grpc/credentials"
 
 	//"google.golang.org/grpc/credentials/sts"
-	"github.com/salrashid123/sts/grpc"
+	sts "github.com/salrashid123/sts/grpc"
 )
 
 var (
-	address       = flag.String("address", "grpcserver-6w42z6vi3q-uc.a.run.app:443", "host:port of gRPC server")
-	stsaddress    = flag.String("stsaddress", "https://stsserver-6w42z6vi3q-uc.a.run.app", "STS Server address")
-	stsaudience   = flag.String("stsaudience", "stsserver-6w42z6vi3q-uc.a.run.app", "the audience and resource value to send to STS server")
+	address       = flag.String("address", "grpcserver-3kdezruzua-uc.a.run.app:443", "host:port of gRPC server")
+	stsaddress    = flag.String("stsaddress", "https://grpcserver-3kdezruzua-uc.a.run.app", "STS Server address")
+	stsaudience   = flag.String("stsaudience", "stsserver-3kdezruzua-uc.a.run.app", "the audience and resource value to send to STS server")
 	scope         = flag.String("scope", "https://www.googleapis.com/auth/cloud-platform", "scope to send to STS server")
 	cacert        = flag.String("cacert", "", "root CA Certificate for TLS")
-	sniServerName = flag.String("servername", "grpcserver-6w42z6vi3q-uc.a.run.app", "SNIServer Name for the server")
+	sniServerName = flag.String("servername", "grpcserver-3kdezruzua-uc.a.run.app", "SNIServer Name for the server")
 	stsCredFile   = flag.String("stsCredFile", "", "File with the original credentials")
 	usetls        = flag.Bool("usetls", false, "startup using TLS")
 )
@@ -81,7 +81,7 @@ func main() {
 		// customClient := &http.Client{
 		// 	Transport: &http.Transport{
 		// 		TLSClientConfig: &tls.Config{
-		// 			ServerName: "stsserver-6w42z6vi3q-uc.a.run.app",
+		// 			ServerName: "stsserver-3kdezruzua-uc.a.run.app",
 		// 			RootCAs:    caCertPool,
 		// 		},
 		// 	}}

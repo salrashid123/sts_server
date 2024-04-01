@@ -87,6 +87,10 @@ echo $GRPC_SERVER_ADDRESS
 export STS_URL=`gcloud run services describe stsserver --format="value(status.url)"`/token
 echo $STS_URL
 
+
+export GRPC_GO_LOG_VERBOSITY_LEVEL=99
+export GRPC_GO_LOG_SEVERITY_LEVEL=info
+
 go run grpc_client.go \
   --address $GRPC_SERVER_ADDRESS:443 \
   --cacert googleCA.crt \
@@ -254,7 +258,7 @@ The following snippet shows the exchange happening from a source token "iamtheeg
 One the exchange takes place, a plain authorized request 
 ```golang
 import (
-   	sal "github.com/salrashid123/oauth2/sts"
+   	sal "github.com/salrashid123/sts/http"
 )
 
 	client := &http.Client{}
